@@ -12,60 +12,71 @@ Base* generate()
     std::srand(static_cast<unsigned int>(std::time(0)));
     int r = std::rand() % 3;
     if (r == 0) {
-        std::cout << "[Generated A] ";
+        std::cout << "Generated A " << std::endl;
         return new A;
     } else if (r == 1) {
-        std::cout << "[Generated B] ";
+        std::cout << "Generated B " << std::endl;
         return new B;
     } else {
-        std::cout << "[Generated C] ";
+        std::cout << "Generated C " << std::endl;
         return new C;
     }
 }
 
-void identify(Base* p) 
+void identify_pointer(Base* p) 
 {
     if (dynamic_cast<A*>(p))
-        std::cout << "Type: A\n";
+        std::cout << "Type: A" << std::endl;
     else if (dynamic_cast<B*>(p))
-        std::cout << "Type: B\n";
+        std::cout << "Type: B" << std::endl;
     else if (dynamic_cast<C*>(p))
-        std::cout << "Type: C\n";
+        std::cout << "Type: C" << std::endl;
     else
-        std::cout << "Type: Unknown\n";
+        std::cout << "Type: Unknown\n" << std::endl;
 }
 
-void identify(Base& p) 
+void identify_ref(Base& p) 
 {
     try {
-        (void)dynamic_cast<A&>(p);
+        dynamic_cast<A&>(p);
         std::cout << "Type: A\n";
         return;
-    } catch (...) {}
+    } 
+	catch (std::exception &e) {
+
+		std::cout << "Not A, trying B : " << e.what() << std::endl;
+	}
 
     try {
-        (void)dynamic_cast<B&>(p);
+        dynamic_cast<B&>(p);
         std::cout << "Type: B\n";
         return;
-    } catch (...) {}
+    } 
+	catch (std::exception &e) {
 
+		std::cout << "Not B, trying C : " << e.what() << std::endl;
+	}
     try {
-        (void)dynamic_cast<C&>(p);
+        dynamic_cast<C&>(p);
         std::cout << "Type: C\n";
         return;
-    } catch (...) {}
+    } 
+	catch (std::exception &e) {
 
-    std::cout << "Type: Unknown\n";
+		std::cout << "Error : " << e.what() << std::endl;
+	}
+
+    std::cout << "Type: Unknown" << std::endl;
 }
 
 int main() {
     Base* obj = generate();
 
-    std::cout << "identify(Base*): ";
-    identify(obj);
+    std::cout << "identify pointer :" << std::endl;
+    identify_pointer(obj);
 
-    std::cout << "identify(Base&): ";
-    identify(*obj);
+    std::cout << "identify reference :" << std::endl;
+    identify_ref(*obj);
 
     delete obj;
     return 0;
