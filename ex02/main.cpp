@@ -6,7 +6,7 @@
 /*   By: armitite <armitite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 15:29:08 by armitite          #+#    #+#             */
-/*   Updated: 2025/04/18 15:29:09 by armitite         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:27:25 by armitite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void identify_pointer(Base* p)
 void identify_ref(Base& p) 
 {
     try {
-        dynamic_cast<A&>(p);
-        std::cout << "Type: A\n";
+        A &A_ref = dynamic_cast<A&>(p);
+        std::cout << "Type A : " << &A_ref << std::endl;
         return;
     } 
 	catch (std::exception &e) {
@@ -60,8 +60,8 @@ void identify_ref(Base& p)
 	}
 
     try {
-        dynamic_cast<B&>(p);
-        std::cout << "Type: B\n";
+        B &B_ref = dynamic_cast<B&>(p);
+        std::cout << "Type B : " << &B_ref << std::endl;
         return;
     } 
 	catch (std::exception &e) {
@@ -69,8 +69,8 @@ void identify_ref(Base& p)
 		std::cout << "Not B, trying C : " << e.what() << std::endl;
 	}
     try {
-        dynamic_cast<C&>(p);
-        std::cout << "Type: C\n";
+        C &C_Ref = dynamic_cast<C&>(p);
+        std::cout << "Type C : " << &C_Ref << std::endl;
         return;
     } 
 	catch (std::exception &e) {
